@@ -13,7 +13,7 @@ const payload = {
       component: 'audit-page',
       group: 'ops',
       order: 2,
-      permission: 'audit:view',
+      permission: 'example.admin.audit.view',
     },
     {
       path: '/reports',
@@ -85,14 +85,14 @@ describe('后台菜单归一', () => {
   it('按权限过滤菜单，但路由仍然注册（交给守卫落 403）', () => {
     const menu = normalizeRemoteMenu(payload)
     expect(visibleMenuItems(menu, []).map((item) => item.path)).toEqual(['/reports', '/export'])
-    expect(visibleMenuItems(menu, ['audit:view', 'report:*']).map((item) => item.path)).toEqual([
-      '/reports',
-      '/audit',
-      '/export',
-    ])
+    expect(
+      visibleMenuItems(menu, ['example.admin.audit.view', 'example.admin.report.*']).map(
+        (item) => item.path,
+      ),
+    ).toEqual(['/reports', '/audit', '/export'])
     expect(remoteRoutes(menu).map((route) => route.path)).toContain('/audit')
     expect(remoteRoutes(menu).find((route) => route.path === '/audit')?.permission).toEqual([
-      'audit:view',
+      'example.admin.audit.view',
     ])
   })
 })
@@ -105,7 +105,7 @@ describe('层级菜单归一', () => {
         path: '/insight',
         label: '经营分析',
         group: 'insight',
-        permission: 'report:*',
+        permission: 'example.admin.report.*',
         children: [
           { path: '/reports', label: '报表中心', component: 'reports-page', order: 2 },
           {
@@ -113,7 +113,7 @@ describe('层级菜单归一', () => {
             label: '操作日志',
             component: 'audit-page',
             order: 1,
-            permission: 'audit:view',
+            permission: 'example.admin.audit.view',
           },
           {
             path: '/audit/login',
@@ -136,9 +136,12 @@ describe('层级菜单归一', () => {
       '/audit/login',
     ])
     // 子项继承父级分组与权限
-    expect(parent?.children[1]).toMatchObject({ group: 'insight', permission: ['report:*'] })
+    expect(parent?.children[1]).toMatchObject({
+      group: 'insight',
+      permission: ['example.admin.report.*'],
+    })
     // 子项自己声明权限时以自己为准
-    expect(parent?.children[0]?.permission).toEqual(['audit:view'])
+    expect(parent?.children[0]?.permission).toEqual(['example.admin.audit.view'])
     // hidden 会被子项继承
     expect(parent?.children[2]?.hidden).toBe(true)
   })
@@ -155,13 +158,13 @@ describe('层级菜单归一', () => {
 
   it('父级无权限时整棵子树都不出现', () => {
     const menu = normalizeRemoteMenu(nested)
-    expect(visibleMenuItems(menu, ['audit:view'])).toEqual([])
+    expect(visibleMenuItems(menu, ['example.admin.audit.view'])).toEqual([])
   })
 
   it('纯容器在子项全部不可见时不显示', () => {
     const menu = normalizeRemoteMenu(nested)
     // 菜单上写的是 `report:*`（要求该模块权限），授权侧给通配即可满足
-    const visible = visibleMenuItems(menu, ['report:*'])
+    const visible = visibleMenuItems(menu, ['example.admin.report.*'])
     expect(visible.map((item) => item.path)).toEqual(['/insight'])
     expect(visible[0]?.children.map((child) => child.path)).toEqual(['/reports'])
   })

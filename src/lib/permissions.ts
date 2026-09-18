@@ -1,7 +1,8 @@
 /**
  * 前端权限判定（纯逻辑）。
  *
- * 权限码由身份服务下发，形如 `customer:view`。前端只做"能不能看见 / 能不能点"的展示层
+ * 权限码由身份服务下发，形如 `example.admin.member.view`（`<命名空间>.<资源>.<动作>`）。
+ * 前端只做"能不能看见 / 能不能点"的展示层
  * 判断——**真正的鉴权必须在服务端**，这里挡住的只是误操作与脏 URL。
  */
 
@@ -17,8 +18,8 @@ export type PermissionRequirement = PermissionCode | readonly PermissionCode[] |
 /**
  * 单个权限码判定，支持三种写法：
  * - `*`：拥有全部权限；
- * - `report:*`：拥有该模块下的全部权限；
- * - `customer:view`：精确匹配。
+ * - `example.admin.member.*`：拥有该资源下的全部权限；
+ * - `example.admin.member.view`：精确匹配。
  */
 export function matchPermission(
   granted: readonly PermissionCode[] = [],
@@ -26,7 +27,7 @@ export function matchPermission(
 ): boolean {
   return granted.some((code) => {
     if (code === '*' || code === required) return true
-    const prefix = code.endsWith(':*') ? code.slice(0, -1) : undefined
+    const prefix = code.endsWith('.*') ? code.slice(0, -1) : undefined
     return prefix ? required.startsWith(prefix) : false
   })
 }
