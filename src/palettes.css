@@ -1,0 +1,236 @@
+/* Console palettes. Business status colors remain independent.
+ *
+ * 品牌青柠（--brand-lime）是面层 Token：默认青绿保留品牌青柠，其余方案按各自
+ * 主色色相取值（石墨另取更深一档冷灰，否则与海蓝的浅蓝面层几乎同色），避免
+ * 切到海蓝后色板里仍留一块青柠。浅色块同时作用于深浅模式，与默认值一处定义。
+ *
+ * 海蓝 / 暮紫 pair best because every surface keeps the scheme's own primary hue
+ * and background → sidebar → muted → accent → border → input → text deepens in
+ * even chroma steps. The other console-only presets move 35% of the way toward
+ * that profile: the size of each step stays as authored, only the hue drift and
+ * the flattest steps are nudged, so the schemes keep their identity (森林偏暖灰,
+ * 琥珀偏沙金, 石墨保持中性冷灰, surfaces at 60% depth) without a redesign.
+ *
+ * 青绿（默认）is the brand palette and stays aligned with official/app/globals.css
+ * (青柠绿白面层 + 青绿主色), so it keeps its brand values in index.css. */
+:root[data-palette='blue'] {
+  --background: #f7f9fc;
+  --foreground: #1c2d45;
+  --card: #ffffff;
+  --primary: #2555a6;
+  --primary-hover: #1d4385;
+  --primary-foreground: #ffffff;
+  --muted: #edf2f9;
+  --muted-foreground: #566780;
+  --accent: #e3ecf8;
+  --accent-foreground: #2555a6;
+  --border: #d8e2ef;
+  --input: #9aadc8;
+  --sidebar: #eff3f9;
+  /* 品牌青柠跟随方案色相：浅色块同时作用于深浅模式。 */
+  --brand-lime: #d9e7ff;
+  --brand-lime-foreground: #293852;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root.dark[data-palette='blue'] {
+  --background: #131e30;
+  --foreground: #e7edf7;
+  --card: #1c2e47;
+  --primary: #9fc3ff;
+  --primary-hover: #c2d9ff;
+  --primary-foreground: #132747;
+  --muted: #19283f;
+  --muted-foreground: #afbed4;
+  --accent: #293d5b;
+  --accent-foreground: #c2d9ff;
+  --border: #374d6c;
+  --input: #6c86ab;
+  --sidebar: #17243a;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root[data-palette='forest'] {
+  --background: #f7faf6;
+  --foreground: #203528;
+  --card: #ffffff;
+  --primary: #326647;
+  --primary-hover: #254f36;
+  --primary-foreground: #ffffff;
+  --muted: #eef4ed;
+  --muted-foreground: #576c5b;
+  --accent: #e3eee3;
+  --accent-foreground: #326647;
+  --border: #d9e5d8;
+  --input: #9bb39e;
+  --sidebar: #f0f5ee;
+  --brand-lime: #bef6d1;
+  --brand-lime-foreground: #21402d;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root.dark[data-palette='forest'] {
+  --background: #162319;
+  --foreground: #e7efe4;
+  --card: #213827;
+  --primary: #a6d6aa;
+  --primary-hover: #c7e6c7;
+  --primary-foreground: #1a3020;
+  --muted: #1c3021;
+  --muted-foreground: #b3c5b0;
+  --accent: #2e4832;
+  --accent-foreground: #c7e6c7;
+  --border: #3d5b42;
+  --input: #769677;
+  --sidebar: #1a2b1e;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root[data-palette='violet'] {
+  --background: #faf8fc;
+  --foreground: #32283f;
+  --card: #ffffff;
+  --primary: #704a96;
+  --primary-hover: #583976;
+  --primary-foreground: #ffffff;
+  --muted: #f2eef7;
+  --muted-foreground: #6b5e78;
+  --accent: #ece5f4;
+  --accent-foreground: #704a96;
+  --border: #e3dbea;
+  --input: #b2a3c2;
+  --sidebar: #f5f0f8;
+  --brand-lime: #eddfff;
+  --brand-lime-foreground: #3e314d;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root.dark[data-palette='violet'] {
+  --background: #221c2c;
+  --foreground: #efe8f5;
+  --card: #352a43;
+  --primary: #ccb2e9;
+  --primary-hover: #e1cdf5;
+  --primary-foreground: #2e1e41;
+  --muted: #2e243b;
+  --muted-foreground: #c4b6d0;
+  --accent: #443651;
+  --accent-foreground: #e1cdf5;
+  --border: #5b486d;
+  --input: #9780ac;
+  --sidebar: #292134;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root[data-palette='amber'] {
+  --background: #fcf9f6;
+  --foreground: #3d2d1c;
+  --card: #ffffff;
+  --primary: #8a571c;
+  --primary-hover: #6b4214;
+  --primary-foreground: #ffffff;
+  --muted: #f6f0e8;
+  --muted-foreground: #75624c;
+  --accent: #f2e8d9;
+  --accent-foreground: #8a571c;
+  --border: #e8decf;
+  --input: #bba68b;
+  --sidebar: #f8f2ea;
+  --brand-lime: #ffe0c3;
+  --brand-lime-foreground: #4a321b;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root.dark[data-palette='amber'] {
+  --background: #282013;
+  --foreground: #f3ecdf;
+  --card: #3d301d;
+  --primary: #e8c080;
+  --primary-hover: #f3d9af;
+  --primary-foreground: #352510;
+  --muted: #342918;
+  --muted-foreground: #ccbca4;
+  --accent: #4c3c24;
+  --accent-foreground: #f3d9af;
+  --border: #645132;
+  --input: #a3885f;
+  --sidebar: #302516;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root[data-palette='graphite'] {
+  --background: #f8f9fa;
+  --foreground: #272e38;
+  --card: #ffffff;
+  --primary: #4b596c;
+  --primary-hover: #374354;
+  --primary-foreground: #ffffff;
+  --muted: #eff1f5;
+  --muted-foreground: #606976;
+  --accent: #e6ebf1;
+  --accent-foreground: #4b596c;
+  --border: #dbe1e8;
+  --input: #a3adbb;
+  --sidebar: #f1f3f6;
+  /* 石墨是中性冷灰方案，品牌青柠取更深一档的冷灰，避免与海蓝的浅蓝面层混同。 */
+  --brand-lime: #cbd2da;
+  --brand-lime-foreground: #2f3640;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+:root.dark[data-palette='graphite'] {
+  --background: #1b2027;
+  --foreground: #ebeef3;
+  --card: #29303c;
+  --primary: #b9c7dc;
+  --primary-hover: #d9e2ee;
+  --primary-foreground: #242e3e;
+  --muted: #232a35;
+  --muted-foreground: #b7bfcc;
+  --accent: #37404f;
+  --accent-foreground: #d9e2ee;
+  --border: #485465;
+  --input: #7f8ea4;
+  --sidebar: #212630;
+  --popover: var(--card);
+  --secondary: var(--muted);
+  --ring: var(--primary);
+}
+
+/* Palette previews retain each scheme's identity before selection. */
+[data-palette-swatch='teal'] {
+  background: #086c6a;
+}
+[data-palette-swatch='blue'] {
+  background: #2555a6;
+}
+[data-palette-swatch='forest'] {
+  background: #326647;
+}
+[data-palette-swatch='violet'] {
+  background: #704a96;
+}
+[data-palette-swatch='amber'] {
+  background: #8a571c;
+}
+[data-palette-swatch='graphite'] {
+  background: #4b596c;
+}

@@ -1,0 +1,120 @@
+/* Rem-based type and spacing grow together, preserving room in controls. */
+:root[data-font-scale='112.5'] {
+  font-size: 112.5%;
+}
+:root[data-font-scale='125'] {
+  font-size: 125%;
+}
+:root[data-font-scale='150'] {
+  font-size: 150%;
+}
+:root[data-font-weight='medium'] {
+  --a11y-weight-normal: 500;
+  --a11y-weight-medium: 600;
+  --a11y-weight-semibold: 650;
+  --a11y-weight-bold: 750;
+}
+:root[data-font-weight='bold'] {
+  --a11y-weight-normal: 600;
+  --a11y-weight-medium: 650;
+  --a11y-weight-semibold: 700;
+  --a11y-weight-bold: 800;
+}
+/* Legacy pixel-sized captions must enlarge along with the main typography. */
+.text-\[10px\] {
+  font-size: 0.625rem;
+}
+.text-\[11px\] {
+  font-size: 0.6875rem;
+}
+.text-\[42px\] {
+  font-size: 2.625rem;
+}
+@media (min-width: 640px) {
+  .sm\:text-\[28px\] {
+    font-size: 1.75rem;
+  }
+}
+@media (min-width: 1280px) {
+  .text-\[42px\].xl\:text-5xl {
+    font-size: 3rem;
+  }
+}
+
+/* Accessibility takes precedence over a chosen palette, including portal branding.
+   Preferences are retained in the store and resume when high contrast is disabled. */
+:root[data-high-contrast='true'][data-palette][data-base-color],
+:root[data-high-contrast='true'] [data-portal-theme] {
+  --background: #fff;
+  --foreground: #111;
+  --card: #fff;
+  --card-foreground: #111;
+  --popover: #fff;
+  --popover-foreground: #111;
+  --primary: #111;
+  --primary-text: #111;
+  --primary-hover: #333;
+  --primary-foreground: #fff;
+  --secondary: #eee;
+  --secondary-foreground: #111;
+  --muted: #eee;
+  --muted-foreground: #333;
+  --accent: #ddd;
+  --accent-foreground: #111;
+  --sidebar: #fff;
+  --border: #666;
+  --input: #666;
+  --ring: #111;
+  --brand-lime: #ddd;
+  --brand-lime-foreground: #111;
+}
+:root.dark[data-high-contrast='true'][data-palette][data-base-color],
+:root.dark[data-high-contrast='true'] [data-portal-theme] {
+  --background: #000;
+  --foreground: #fff;
+  --card: #000;
+  --card-foreground: #fff;
+  --popover: #000;
+  --popover-foreground: #fff;
+  --primary: #fff;
+  --primary-text: #fff;
+  --primary-hover: #ddd;
+  --primary-foreground: #000;
+  --secondary: #222;
+  --secondary-foreground: #fff;
+  --muted: #222;
+  --muted-foreground: #ddd;
+  --accent: #333;
+  --accent-foreground: #fff;
+  --sidebar: #000;
+  --border: #aaa;
+  --input: #aaa;
+  --ring: #fff;
+  --brand-lime: #333;
+  --brand-lime-foreground: #fff;
+}
+:root[data-high-contrast='true'] .data-table {
+  --table-border: var(--border);
+}
+:root[data-underline-links='true'] a[href] {
+  text-decoration-line: underline;
+  text-decoration-thickness: max(1px, 0.08em);
+  text-underline-offset: 0.2em;
+}
+/* 灰色模式与色弱模式：，只作用于渲染层。 */
+:root[data-grayscale='true'] {
+  filter: grayscale(1);
+}
+:root[data-color-weak='true'] {
+  filter: saturate(1.45) contrast(1.06);
+}
+:root[data-reduce-motion='true'] *,
+:root[data-reduce-motion='true'] *::before,
+:root[data-reduce-motion='true'] *::after {
+  scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  animation-delay: 0ms !important;
+  transition-duration: 0.01ms !important;
+  transition-delay: 0ms !important;
+}
