@@ -1,0 +1,7 @@
+Runlume Admin Design
+Copyright 2026 Runlume
+
+本产品包含由 Runlume 开发的软件，并以 Apache License 2.0 授权（见 LICENSE）。
+
+第三方依赖与字体各自遵循自身协议：完整清点与许可文本见 public/licenses/，
+分发 dist 等构建产物时需一并保留其中的 licenses 目录。

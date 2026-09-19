@@ -103,7 +103,7 @@ test('顶部快捷操作默认把通知排在第二位', async ({ page }) => {
     'href',
     'https://github.com/runlume/admin-design',
   )
-  await expect(page.getByRole('link', { name: '开源协议（MIT）' })).toBeVisible()
+  await expect(page.getByRole('link', { name: '开源协议（Apache-2.0）' })).toBeVisible()
   await page.getByRole('tab', { name: '界面设置' }).click()
   const names = await page
     .getByRole('dialog')

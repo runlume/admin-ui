@@ -194,7 +194,7 @@ export const zhResources = {
   noPermission: '无权限',
   selectAll: '全选',
   githubRepo: 'GitHub 仓库',
-  license: '开源协议（MIT）',
+  license: '开源协议（Apache-2.0）',
   docsSite: '文档站',
   remoteMenu: {
     unknownComponent:
@@ -814,7 +814,7 @@ const en: typeof zhResources = {
   noPermission: 'No permission',
   selectAll: 'Select all',
   githubRepo: 'GitHub',
-  license: 'License (MIT)',
+  license: 'License (Apache-2.0)',
   docsSite: 'Documentation',
   remoteMenu: {
     unknownComponent:
