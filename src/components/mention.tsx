@@ -1,9 +1,14 @@
-import { useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { match } from 'pinyin-pro'
 import { cn } from '@/lib/utils'
 
 export type MentionOption = { value: string; label: string; description?: string }
+
+/** 候选列表与输入框的间距，对应 mt-1 / mb-1。 */
+const listGap = 4
+/** 候选列表的最小可用高度（约两行带描述的候选加内边距）：下方放不下它就改为向上展开。 */
+const listMinHeight = 112
 
 /**
  * 提及输入：输入触发字符（默认 `@`）后弹出候选，
@@ -31,6 +36,7 @@ export function Mention({
   const editor = useRef<HTMLDivElement>(null)
   const [query, setQuery] = useState<string>()
   const [active, setActive] = useState(0)
+  const [placement, setPlacement] = useState<'bottom' | 'top'>('bottom')
   const matches = options.filter(
     (option) =>
       query !== undefined &&
@@ -55,6 +61,15 @@ export function Mention({
     onValueChange(editor.current?.textContent ?? '')
     setQuery(currentQuery())
     setActive(0)
+  }
+
+  /** 下方剩余空间不足列表最小样式时向上展开；两侧都不足时选空间更大的一侧。 */
+  function place() {
+    const box = editor.current?.getBoundingClientRect()
+    if (!box) return
+    const below = window.innerHeight - box.bottom - listGap
+    const above = box.top - listGap
+    setPlacement(below < listMinHeight && above > below ? 'top' : 'bottom')
   }
 
   /** 采纳候选：把触发词替换成不可编辑的标签节点，并把光标移到标签之后。 */
@@ -128,6 +143,18 @@ export function Mention({
     }
   }
 
+  // 候选打开时以及视口变化（窗口缩放、页面或容器滚动）后重新判断展开方向。
+  useEffect(() => {
+    if (!suggestion) return
+    place()
+    window.addEventListener('resize', place)
+    window.addEventListener('scroll', place, true)
+    return () => {
+      window.removeEventListener('resize', place)
+      window.removeEventListener('scroll', place, true)
+    }
+  }, [suggestion])
+
   return (
     <div data-slot="mention" className={cn('relative', className)}>
       <div
@@ -153,7 +180,10 @@ export function Mention({
         <ul
           role="listbox"
           aria-label={t('mention.title')}
-          className="absolute z-30 mt-1 max-h-48 w-64 overflow-y-auto rounded-lg border bg-popover p-1 shadow-md"
+          className={cn(
+            'absolute z-30 max-h-48 w-64 overflow-y-auto rounded-lg border bg-popover p-1 shadow-md',
+            placement === 'top' ? 'bottom-full mb-1' : 'top-full mt-1',
+          )}
         >
           {matches.map((option, index) => (
             <li key={option.value}>

@@ -409,6 +409,28 @@ test('表单页：上传校验、图片预览与提及', async ({ page }) => {
   await expect(page.getByRole('textbox', { name: '跟进记录' })).toContainText('@张伟')
 })
 
+test('表单页：提及候选按剩余空间决定向下或向上展开', async ({ page }) => {
+  await page.goto('/design-system/form')
+  const editor = page.getByRole('textbox', { name: '跟进记录' })
+  const list = page.getByRole('listbox', { name: '提及候选' })
+  const side = async () => {
+    const [box, panel] = await Promise.all([editor.boundingBox(), list.boundingBox()])
+    if (!box || !panel) return 'missing'
+    return panel.y + panel.height <= box.y + 1 ? 'top' : 'bottom'
+  }
+
+  // 输入框上方、下方空间都充足时向下展开
+  await editor.evaluate((node) => node.scrollIntoView({ block: 'start' }))
+  await editor.click()
+  await page.keyboard.type('已联系 @张')
+  await expect(list).toBeVisible()
+  expect(await side()).toBe('bottom')
+
+  // 输入框贴近视口底部时下方放不下列表最小样式，改为向上展开
+  await editor.evaluate((node) => node.scrollIntoView({ block: 'end' }))
+  await expect.poll(side).toBe('top')
+})
+
 test('图标预览页：全部图标可搜索与复制', async ({ page }) => {
   await page.goto('/design-system/icons')
   await expect(page.getByRole('heading', { level: 1 })).toContainText('图标预览')
