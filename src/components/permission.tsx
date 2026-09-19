@@ -7,8 +7,8 @@ import type { PermissionRequirement } from '@/lib/permissions'
  * 按钮 / 区块级鉴权：没有权限时不渲染 `children`，可以用 `fallback` 换成禁用态。
  *
  * ```tsx
- * <Can permission="customer:create"><Button>新建客户</Button></Can>
- * <Can permission="customer:export" fallback={<Button disabled>导出</Button>}>…</Can>
+ * <Can permission="example.admin.customer.create"><Button>新建客户</Button></Can>
+ * <Can permission="example.admin.customer.export" fallback={<Button disabled>导出</Button>}>…</Can>
  * ```
  */
 export function Can({

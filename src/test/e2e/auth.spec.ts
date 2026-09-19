@@ -21,7 +21,7 @@ test('登录页校验必填并进入控制台', async ({ page }) => {
 
 test('两个测试账号角色不同：管理员能看到操作日志，测试账号看不到', async ({ page }) => {
   await page.goto('/login')
-  // 测试账号：没有 audit:view，菜单里看不到「操作日志」，直接访问落 403
+  // 测试账号：没有 example.admin.audit.view，菜单里看不到「操作日志」，直接访问落 403
   await page.getByRole('button', { name: 'test', exact: true }).click()
   await page.getByRole('button', { name: '登录' }).click()
   await expect(page.getByRole('heading', { level: 1 })).toContainText('工作台')

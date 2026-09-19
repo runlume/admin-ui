@@ -80,7 +80,7 @@ test('测试账号：没权限的菜单不出现，直接访问落 403', async (
 })
 
 test('按钮级鉴权：无权限的操作显示禁用态', async ({ page }) => {
-  // 测试账号没有 customer:export：导出是禁用态，但 customer:create 仍然可用
+  // 测试账号没有 example.admin.customer.export：导出是禁用态，但 example.admin.customer.create 仍然可用
   await page.goto('/login')
   await page.getByRole('button', { name: 'test', exact: true }).click()
   await page.getByRole('button', { name: '登录' }).click()

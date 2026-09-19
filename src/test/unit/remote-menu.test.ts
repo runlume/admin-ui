@@ -163,7 +163,7 @@ describe('层级菜单归一', () => {
 
   it('纯容器在子项全部不可见时不显示', () => {
     const menu = normalizeRemoteMenu(nested)
-    // 菜单上写的是 `report:*`（要求该模块权限），授权侧给通配即可满足
+    // 菜单上写的是 `example.admin.report.*`（要求该资源权限），授权侧给通配即可满足
     const visible = visibleMenuItems(menu, ['example.admin.report.*'])
     expect(visible.map((item) => item.path)).toEqual(['/insight'])
     expect(visible[0]?.children.map((child) => child.path)).toEqual(['/reports'])

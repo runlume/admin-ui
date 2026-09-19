@@ -14,7 +14,7 @@ export const PermissionContext = createContext<readonly PermissionCode[]>([])
 
 export type PermissionApi = {
   permissions: readonly PermissionCode[]
-  /** 单个权限码判定（支持 `*` 与 `module:*`）。 */
+  /** 单个权限码判定（支持 `*` 与 `<命名空间>.<资源>.*`）。 */
   can: (required: PermissionRequirement) => boolean
   /** 全部满足。 */
   canAll: (required: PermissionRequirement) => boolean

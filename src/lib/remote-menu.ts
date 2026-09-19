@@ -46,7 +46,7 @@ export type RemoteMenuItem = {
   order?: number
   /** 只注册路由、不出现在菜单里（详情页、灰度页面） */
   hidden?: boolean
-  /** 需要的权限码；支持数组与 `module:*` 通配。菜单按它过滤，路由按它守门 */
+  /** 需要的权限码；支持数组与 `<命名空间>.<资源>.*` 通配。菜单按它过滤，路由按它守门 */
   permission?: PermissionCode | readonly PermissionCode[]
 }
 
