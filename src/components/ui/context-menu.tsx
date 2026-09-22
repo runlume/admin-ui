@@ -1,4 +1,6 @@
+import * as React from 'react'
 import { ContextMenu as ContextMenuPrimitive } from 'radix-ui'
+import { composeRefs, useOverlayBackgroundSuppression } from '@/lib/overlay-suppression'
 import { cn } from '@/lib/utils'
 
 /** 右键菜单：表格行、标签页等密集列表的次级操作入口。 */
@@ -12,12 +14,17 @@ function ContextMenuTrigger(props: React.ComponentProps<typeof ContextMenuPrimit
 
 function ContextMenuContent({
   className,
+  ref,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {
+  const contentRef = React.useRef<HTMLDivElement>(null)
+  const setLayer = useOverlayBackgroundSuppression<HTMLDivElement>()
+  const layerRef = React.useMemo(() => composeRefs(contentRef, setLayer, ref), [setLayer, ref])
   return (
     <ContextMenuPrimitive.Portal>
       <ContextMenuPrimitive.Content
         data-slot="context-menu-content"
+        ref={layerRef}
         className={cn(
           'z-50 min-w-40 overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-md',
           className,

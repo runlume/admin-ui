@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { AlertDialog as AlertDialogPrimitive } from 'radix-ui'
+import { composeRefs, useOverlayBackgroundSuppression } from '@/lib/overlay-suppression'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
@@ -23,12 +24,17 @@ function AlertDialogOverlay({
 }
 function AlertDialogContent({
   className,
+  ref,
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Content>) {
+  const contentRef = React.useRef<HTMLDivElement>(null)
+  const setLayer = useOverlayBackgroundSuppression<HTMLDivElement>()
+  const layerRef = React.useMemo(() => composeRefs(contentRef, setLayer, ref), [setLayer, ref])
   return (
     <AlertDialogPortal>
       <AlertDialogOverlay />
       <AlertDialogPrimitive.Content
+        ref={layerRef}
         className={cn(
           'fixed left-1/2 top-1/2 z-50 grid w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl border bg-background p-6 shadow-lg',
           className,

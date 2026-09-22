@@ -264,7 +264,8 @@ export function Heatmap({
       <table aria-label={label} className="w-full border-separate border-spacing-1 text-xs">
         <thead>
           <tr>
-            <th />
+            {/* 角格只占位，不承载数据，声明为展示单元避免被读成空表头。 */}
+            <th role="presentation" />
             {columns.map((column) => (
               <th key={column} className="font-normal text-muted-foreground">
                 {column}
@@ -407,7 +408,7 @@ export function FunnelChart({
             </span>
             <span className="min-w-0 flex-1">
               <span
-                className="flex h-7 items-center justify-end rounded bg-primary/70 pr-2 text-xs font-medium text-primary-foreground"
+                className="flex h-7 items-center justify-end rounded bg-primary pr-2 text-xs font-medium text-primary-foreground"
                 style={{ width: `${Math.max(width, 6)}%` }}
               >
                 {stage.value.toLocaleString('zh-CN')}
@@ -439,8 +440,9 @@ export function GanttChart({
 }) {
   const columnWidth = 40
   const width = days.length * columnWidth
+  // 甘特图宽度随天数增长，窄屏需要横向滚动；容器本身可聚焦，键盘才能滚动。
   return (
-    <div className={cn('overflow-x-auto', className)}>
+    <div className={cn('overflow-x-auto', className)} tabIndex={0}>
       <div className="min-w-max">
         <div className="flex text-[10px] text-muted-foreground">
           <span className="w-28 shrink-0" />

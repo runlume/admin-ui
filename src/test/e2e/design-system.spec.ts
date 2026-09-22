@@ -616,7 +616,9 @@ test('新增公共组件在演示页可交互', async ({ page }) => {
   expect(Math.abs((calendarBox?.y ?? 0) - (transferBox?.y ?? 0))).toBeLessThan(4)
   await page.getByRole('checkbox', { name: '操作员' }).click()
   await page.getByRole('button', { name: '移动到已选项' }).click()
-  await expect(page.getByRole('listbox', { name: '已选项' })).toContainText('操作员')
+  // 穿梭框两侧是"复选框组"而不是 listbox 的 option 列表，容器改为 role="group"
+  // 后，listbox 缺少 option 子节点的 axe 违规才消失。
+  await expect(page.getByRole('group', { name: '已选项' })).toContainText('操作员')
 
   await page.goto('/design-system/data')
   const separator = page.getByRole('separator', { name: '调整面板大小' })

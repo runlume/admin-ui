@@ -22,8 +22,9 @@ describe('新增高级组件', () => {
     const change = vi.fn()
     render(<Rate value={3.5} precision={0.5} onValueChange={change} label="服务评分" />)
     expect(document.querySelector('.text-rating')).toBeInTheDocument()
+    // 星级不再是独立按钮（外层 slider 已承载取值与键盘操作），按 data 属性定位半星填充。
     expect(
-      screen.getByRole('button', { name: '4 服务评分' }).querySelector('span > span'),
+      document.querySelector('[data-slot="rate-star"][data-value="4"] span > span'),
     ).toHaveStyle({
       width: '50%',
     })

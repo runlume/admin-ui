@@ -69,7 +69,8 @@ export function Transfer({
         <span>{title}</span>
         <span className="text-xs font-normal text-muted-foreground">{rows.length}</span>
       </header>
-      <div className="max-h-64 min-h-52 overflow-auto p-2" role="listbox" aria-label={title}>
+      {/* 选项是可勾选的复选框而不是 listbox 的 option，用 group 表达分组语义。 */}
+      <div className="max-h-64 min-h-52 overflow-auto p-2" role="group" aria-label={title}>
         {rows.length === 0 ? (
           <p className="grid min-h-36 place-items-center text-sm text-muted-foreground">
             {emptyText}
@@ -78,6 +79,7 @@ export function Transfer({
           rows.map((item) => (
             <label
               key={item.value}
+              aria-disabled={item.disabled || undefined}
               className={cn(
                 'flex min-h-11 items-start gap-2 rounded-md px-2 py-2 text-sm hover:bg-muted',
                 item.disabled && 'cursor-not-allowed opacity-50',

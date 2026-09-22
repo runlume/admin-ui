@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Select as Primitive } from 'radix-ui'
 import { Check, ChevronDown, ChevronUp } from 'lucide-react'
+import { useOverlayBackgroundSuppression } from '@/lib/overlay-suppression'
 import { cn } from '@/lib/utils'
 
 type Props = Omit<React.ComponentProps<'select'>, 'size' | 'multiple'> & { size?: 'sm' | 'default' }
@@ -60,6 +61,10 @@ function NativeSelect({
   const resetting = React.useRef(false)
   const native = React.useRef<HTMLSelectElement>(null)
   const trigger = React.useRef<HTMLButtonElement>(null)
+  // Radix Select 关闭时只把内容节点移出文档、不卸载组件，所以这里显式跟踪打开态，
+  // 关闭即撤销背景的 inert，避免整个页面卡住不可交互。
+  const [open, setOpen] = React.useState(false)
+  const layerRef = useOverlayBackgroundSuppression<HTMLDivElement>(open)
   React.useImperativeHandle(ref, () => native.current!)
   React.useEffect(() => {
     const select = native.current!
@@ -91,6 +96,7 @@ function NativeSelect({
       <Primitive.Root
         value={selected < 0 ? '' : String(selected)}
         onValueChange={change}
+        onOpenChange={setOpen}
         disabled={disabled}
       >
         <Primitive.Trigger
@@ -124,6 +130,7 @@ function NativeSelect({
           <Primitive.Content
             position="popper"
             sideOffset={4}
+            ref={layerRef}
             data-slot="select-content"
             className="z-50 max-h-[min(20rem,var(--radix-select-content-available-height))] min-w-[var(--radix-select-trigger-width)] max-w-[calc(100vw-2rem)] overflow-hidden rounded-lg border bg-popover text-popover-foreground shadow-md"
           >

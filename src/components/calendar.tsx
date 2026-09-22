@@ -98,7 +98,8 @@ export function Calendar({
               aria-pressed={key === value}
               className={cn(
                 'aspect-square rounded-md text-sm hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                outside && 'text-muted-foreground/50',
+                // 跨月日期仍可点击切换月份，必须保持 4.5:1；改用完整的 muted 前景色。
+                outside && 'text-muted-foreground',
                 key === today && 'border border-primary',
                 key === value && 'bg-primary text-primary-foreground hover:bg-primary',
                 disabled && 'cursor-not-allowed opacity-30',

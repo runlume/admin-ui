@@ -3,6 +3,7 @@
 import * as React from 'react'
 import { useUiTranslation } from '../../lib/use-ui-translation'
 import { avoidInitialCloseFocus } from '@/lib/dialog-focus'
+import { composeRefs, useOverlayBackgroundSuppression } from '@/lib/overlay-suppression'
 import { cn } from '@/lib/utils'
 import { XIcon } from 'lucide-react'
 import { Dialog as DialogPrimitive } from 'radix-ui'
@@ -49,6 +50,7 @@ function DialogContent({
   draggable = false,
   zIndex,
   top,
+  ref,
   ...props
 }: Omit<React.ComponentProps<typeof DialogPrimitive.Content>, 'draggable'> & {
   showCloseButton?: boolean
@@ -67,6 +69,8 @@ function DialogContent({
   // 拖动期间禁用过渡：否则 translate 会以 200ms 过渡，跟手会有明显滞后。
   const [dragging, setDragging] = React.useState(false)
   const contentRef = React.useRef<HTMLDivElement>(null)
+  const setLayer = useOverlayBackgroundSuppression<HTMLDivElement>()
+  const layerRef = React.useMemo(() => composeRefs(contentRef, setLayer, ref), [setLayer, ref])
   const drag = React.useRef<{ x: number; y: number; origin: { x: number; y: number } } | null>(null)
   React.useEffect(() => {
     const node = contentRef.current
@@ -101,7 +105,7 @@ function DialogContent({
         data-draggable={canDrag || undefined}
         data-drag-touch={touchDrag || undefined}
         data-dragging={dragging || undefined}
-        ref={contentRef}
+        ref={layerRef}
         style={{ ...(zIndex ? { zIndex } : {}), ...dragVars }}
         onDoubleClick={() => {
           if (!canDrag) return

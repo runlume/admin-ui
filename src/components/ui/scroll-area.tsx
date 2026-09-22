@@ -13,7 +13,8 @@ function ScrollArea({
       className={cn('relative overflow-hidden', className)}
       {...props}
     >
-      <ScrollAreaPrimitive.Viewport className="size-full rounded-[inherit]">
+      {/* 内容本身可能没有可聚焦元素，视口需可聚焦，键盘才能滚动查看。 */}
+      <ScrollAreaPrimitive.Viewport className="size-full rounded-[inherit]" tabIndex={0}>
         {children}
       </ScrollAreaPrimitive.Viewport>
       <ScrollAreaPrimitive.Scrollbar

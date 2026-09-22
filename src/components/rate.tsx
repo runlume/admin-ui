@@ -67,19 +67,26 @@ export function Rate({
       {Array.from({ length: max }, (_, index) => {
         const fullValue = index + 1
         const fill = shown >= fullValue ? 100 : shown >= fullValue - 0.5 ? 50 : 0
+        // 星级本身不是独立控件：外层 role="slider" 已承载取值与键盘操作，
+        // 里面再放 button 会形成嵌套交互（axe nested-interactive），这里只做视觉与指针命中。
         return (
-          <button
+          <span
             key={fullValue}
-            type="button"
-            disabled={disabled}
-            aria-label={`${fullValue} ${label}`}
-            className="relative size-7 text-muted-foreground transition-transform hover:scale-110 disabled:pointer-events-none"
+            data-slot="rate-star"
+            data-value={fullValue}
+            className={cn(
+              'relative size-7 text-muted-foreground transition-transform',
+              disabled ? 'pointer-events-none' : 'cursor-pointer hover:scale-110',
+            )}
             onMouseMove={(event) => {
+              if (disabled) return
               const half =
                 precision === 0.5 && event.nativeEvent.offsetX < event.currentTarget.offsetWidth / 2
               setPreview(half ? fullValue - 0.5 : fullValue)
             }}
-            onClick={() => change(preview ?? fullValue)}
+            onClick={() => {
+              if (!disabled) change(preview ?? fullValue)
+            }}
           >
             <Star className="absolute inset-1 size-5" aria-hidden="true" />
             <span className="absolute inset-1 size-5 text-rating">
@@ -87,7 +94,7 @@ export function Rate({
                 <Star className="size-5 fill-current" aria-hidden="true" />
               </span>
             </span>
-          </button>
+          </span>
         )
       })}
     </div>
