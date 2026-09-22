@@ -3,11 +3,11 @@ import { CalendarRange } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Popover } from 'radix-ui'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { dayKey, monthGrid, rangeState } from '@/lib/range'
+import { dayKey, monthGrid, rangeState } from '../../lib/range'
 import { DateInput } from './date-input'
 import { Button } from './button'
 import { Label } from './label'
-import { invalidRange, rangeLabel, rangeShortcuts, type DateRange } from '@/lib/range'
+import { invalidRange, rangeLabel, rangeShortcuts, type DateRange } from '../../lib/range'
 import { cn } from '@/lib/utils'
 
 /**

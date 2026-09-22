@@ -17,5 +17,5 @@
     "strict": true,
     "moduleResolution": "bundler"
   },
-  "include": ["vite.config.ts", "playwright.config.ts", "scripts"]
+  "include": ["vite.config.ts", "vite.lib.config.ts", "playwright.config.ts", "scripts"]
 }
