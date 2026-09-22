@@ -21,6 +21,12 @@ describe('新增高级组件', () => {
   it('评分支持半星与键盘调整', () => {
     const change = vi.fn()
     render(<Rate value={3.5} precision={0.5} onValueChange={change} label="服务评分" />)
+    expect(document.querySelector('.text-rating')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: '4 服务评分' }).querySelector('span > span'),
+    ).toHaveStyle({
+      width: '50%',
+    })
     fireEvent.keyDown(screen.getByRole('slider', { name: '服务评分' }), { key: 'ArrowRight' })
     expect(change).toHaveBeenCalledWith(4)
   })

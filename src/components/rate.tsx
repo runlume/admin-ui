@@ -82,11 +82,10 @@ export function Rate({
             onClick={() => change(preview ?? fullValue)}
           >
             <Star className="absolute inset-1 size-5" aria-hidden="true" />
-            <span
-              className="absolute inset-1 overflow-hidden text-warning"
-              style={{ width: `${fill}%` }}
-            >
-              <Star className="size-5 fill-current" aria-hidden="true" />
+            <span className="absolute inset-1 size-5 text-rating">
+              <span className="block h-full overflow-hidden" style={{ width: `${fill}%` }}>
+                <Star className="size-5 fill-current" aria-hidden="true" />
+              </span>
             </span>
           </button>
         )
