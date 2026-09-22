@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { toast } from 'sonner'
 import { Check, Copy } from 'lucide-react'
 import { Button } from './ui/button'
@@ -15,7 +15,7 @@ export function CodeBlock({
   title?: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [copied, setCopied] = useState(false)
   async function copy() {
     try {

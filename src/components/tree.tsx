@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { ChevronRight, ListTree, Search } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import {
   checkState,
   flattenTree,
@@ -66,7 +66,7 @@ export function Tree({
   virtual?: boolean
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [expanded, setExpanded] = useState(() => new Set(defaultExpanded))
   const [selected, setSelected] = useState(defaultSelected)
   const [focused, setFocused] = useState(defaultSelected ?? nodes[0]?.id)

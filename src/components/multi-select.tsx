@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Popover } from 'radix-ui'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
@@ -28,7 +28,7 @@ export function MultiSelect({
   placeholder?: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const visible = useMemo(() => {

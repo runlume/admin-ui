@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Check, ChevronDown, X } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Popover } from 'radix-ui'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
@@ -37,7 +37,7 @@ export function Combobox({
   disabled?: boolean
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const groups = useMemo(() => {

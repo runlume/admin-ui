@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Check, CircleQuestionMark, X } from 'lucide-react'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { passwordRules, passwordStrength } from '@/lib/password'
@@ -25,7 +25,7 @@ export function PasswordStrength({
   compact?: boolean
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const strength = passwordStrength(password)
   const percent = (strength.score / passwordRules.length) * 100
   const rules = (

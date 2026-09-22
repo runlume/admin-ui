@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { AlertCircle, ArrowLeft, Copy, Inbox, LoaderCircle, RefreshCw } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -45,7 +45,7 @@ export function EmptyState({
   /** 嵌入卡片时用 compact。 */
   size?: 'default' | 'compact'
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <div
       data-size={size}
@@ -74,7 +74,7 @@ export function ErrorState({
   traceId?: string
   retry?: () => void
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <section role="alert" className="rounded-lg border border-danger/25 bg-danger-soft px-5 py-4">
       <div className="flex items-start gap-3">
@@ -106,7 +106,7 @@ export function LoadingState({
   variant?: 'spinner' | 'dots' | 'bars'
   label?: string
 } = {}) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   if (variant !== 'spinner')
     return (
       <div
@@ -142,7 +142,7 @@ export function LoadingState({
   )
 }
 export function CopyValue({ value }: { value: string }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   async function copy() {
     try {
       await navigator.clipboard.writeText(value)
@@ -167,7 +167,7 @@ export function CopyValue({ value }: { value: string }) {
   )
 }
 export function NotFoundPage() {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-6 text-center">
       <p className="font-mono text-primary">404</p>
@@ -185,7 +185,7 @@ export function NotFoundPage() {
 
 /** 403：菜单里没有、但直接敲 URL 进来的页面。 */
 export function ForbiddenPage() {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <section role="alert" className="flex flex-col items-center py-20 text-center">
       <p className="font-mono text-primary">403</p>

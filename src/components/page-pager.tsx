@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { pagerItems, parsePageInput } from '@/lib/pager'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
@@ -20,7 +20,7 @@ export function PagePager({
   onPageChange: (page: number) => void
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [jump, setJump] = useState('')
   const total = Math.max(1, pageCount)
   return (

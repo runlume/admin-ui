@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { NativeSelect } from './native-select'
 
 export function Select({
@@ -19,7 +19,7 @@ export function Select({
   /** 提供"清空"选项，选中后回传空字符串。 */
   clearable?: boolean
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <NativeSelect
       id={id}

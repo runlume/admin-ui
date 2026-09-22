@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { AlertCircle, CircleCheck, Info, TriangleAlert } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { cn } from '@/lib/utils'
 
 const alertVariants = cva(
@@ -38,7 +38,7 @@ function Alert({
     action?: ReactNode
     onClose?: () => void
   }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const Icon = icons[variant ?? 'info']
   return (
     <div

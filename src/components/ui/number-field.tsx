@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { Button } from './button'
 import { cn } from '@/lib/utils'
 
@@ -26,7 +26,7 @@ function NumberField({
   unit?: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const clamp = (next: number) =>
     Number(Math.min(max, Math.max(min, next)).toFixed(step < 1 ? 2 : 0))
   return (

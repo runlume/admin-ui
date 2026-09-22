@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { CalendarRange } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { Popover } from 'radix-ui'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { dayKey, monthGrid, rangeState } from '../../lib/range'
@@ -25,7 +25,7 @@ function DateRangeInput({
   label: string
   className?: string
 }) {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useUiTranslation()
   const [draft, setDraft] = useState<DateRange>(value)
   const [open, setOpen] = useState(false)
   const invalid = invalidRange(draft)

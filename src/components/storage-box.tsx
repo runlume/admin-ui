@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Bookmark, PencilLine, Save, Trash2 } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { toast } from 'sonner'
 import {
   presetNameTaken,
@@ -43,7 +43,7 @@ export function StorageBox<T>({
   emptyHint?: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const key = `storage-box.${storageId}`
   const [entries, setEntries] = useState<Preset<T>[]>(() => readPresets<T>(key))
   const [name, setName] = useState('')

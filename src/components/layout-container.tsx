@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { GripVertical, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 import { storageKey } from '@/lib/storage-key'
@@ -28,7 +28,7 @@ export function LayoutContainer({
   onWidthChange?: (width: number) => void
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [collapsed, setCollapsed] = useState(defaultCollapsed)
   const [width, setWidth] = useState(() => {
     if (!storageId) return 288

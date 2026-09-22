@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Button } from './ui/button'
 import {
   Dialog,
@@ -34,7 +34,7 @@ export function ConfirmDialog({
   onConfirm: () => void | Promise<void>
   children?: ReactNode
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [pending, setPending] = useState(false)
   const variants = { default: 'default', danger: 'destructive', warning: 'warning' } as const
   return (

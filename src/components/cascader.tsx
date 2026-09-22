@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Check, ChevronDown, ChevronRight } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Popover } from 'radix-ui'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
@@ -31,7 +31,7 @@ export function Cascader({
   placeholder?: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [open, setOpen] = useState(false)
   const [path, setPath] = useState<CascaderOption[]>([])
   const columns = useMemo(() => {

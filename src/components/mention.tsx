@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { match } from 'pinyin-pro'
 import { cn } from '@/lib/utils'
 
@@ -32,7 +32,7 @@ export function Mention({
   placeholder?: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const editor = useRef<HTMLDivElement>(null)
   const [query, setQuery] = useState<string>()
   const [active, setActive] = useState(0)

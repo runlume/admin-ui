@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { ChevronRight } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { DataTable } from './data-table'
 import { Button } from './ui/button'
 import { flattenTree, type FlatTreeRow, type TreeNode } from '@/lib/tree'
@@ -34,7 +34,7 @@ export function TreeTable<T>({
   rowLabel: (node: TreeNode<T>) => string
   defaultExpanded?: string[]
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [expanded, setExpanded] = useState(() => new Set(defaultExpanded))
   const rows = flattenTree(nodes, expanded)
 

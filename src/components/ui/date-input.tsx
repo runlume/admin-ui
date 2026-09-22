@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Popover } from 'radix-ui'
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { cn } from '@/lib/utils'
 import { inputBaseClass } from './input'
 
@@ -21,7 +21,7 @@ export function DateInput({
   readOnly,
   ...props
 }: React.ComponentProps<'input'>) {
-  const { i18n } = useTranslation()
+  const { i18n } = useUiTranslation()
   const english = i18n.language.startsWith('en')
   const native = React.useRef<HTMLInputElement>(null)
   const panel = React.useRef<HTMLDivElement>(null)

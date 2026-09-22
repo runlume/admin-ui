@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { FileUp, Trash2, UploadCloud } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { Progress } from './progress'
 import { Button } from './button'
 import { cn } from '@/lib/utils'
@@ -52,7 +52,7 @@ export function FileUpload({
   label: string
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const input = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
   const controllers = useRef(new Map<string, AbortController>())

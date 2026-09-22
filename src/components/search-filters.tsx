@@ -13,7 +13,7 @@ import {
   type ReactNode,
 } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Button } from '@/components/ui/button'
 import { FilterPresets } from '@/components/filter-presets'
 import { cn } from '@/lib/utils'
@@ -62,7 +62,7 @@ export function SearchFilters({
   collapsible?: boolean
   defaultExpanded?: boolean
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [expanded, setExpanded] = useState(defaultExpanded)
   const id = useId()
   const fieldsRef = useRef<HTMLDivElement>(null)

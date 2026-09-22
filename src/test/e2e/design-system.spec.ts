@@ -397,7 +397,12 @@ test('表单页：上传校验、图片预览与提及', async ({ page }) => {
 
   // 图片预览
   await page.getByRole('button', { name: /预览图片/ }).click()
-  await expect(page.getByRole('dialog').getByRole('img', { name: '品牌方标' })).toBeVisible()
+  const previewDialog = page.getByRole('dialog')
+  const previewImage = previewDialog.getByRole('img', { name: '品牌方标' })
+  await expect(previewImage).toBeVisible()
+  expect((await previewImage.boundingBox())?.height).toBeGreaterThan(300)
+  await previewDialog.getByRole('button', { name: '放大' }).click()
+  await expect(previewDialog.getByText('125%')).toBeVisible()
   await page.keyboard.press('Escape')
 
   // 提及候选：采纳后插入内联标签
@@ -593,4 +598,31 @@ test('可拖动弹窗：位移与指针一致，双击标题复位', async ({ pa
   await expect
     .poll(async () => Math.round((await dialog.boundingBox())?.y ?? 0))
     .toBe(Math.round(before.y))
+})
+
+test('新增公共组件在演示页可交互', async ({ page }) => {
+  await page.goto('/design-system/basic')
+  const rate = page.getByRole('slider', { name: '服务评分' })
+  await rate.press('ArrowRight')
+  await expect(rate).toHaveAttribute('aria-valuenow', '4')
+
+  await page.goto('/design-system/form')
+  const calendarHeading = page.getByText('完整日历', { exact: true })
+  const transferHeading = page.getByText('穿梭框', { exact: true })
+  await expect(calendarHeading).toBeVisible()
+  const calendarBox = await calendarHeading.boundingBox()
+  const transferBox = await transferHeading.boundingBox()
+  expect(calendarBox && transferBox && transferBox.x > calendarBox.x).toBeTruthy()
+  expect(Math.abs((calendarBox?.y ?? 0) - (transferBox?.y ?? 0))).toBeLessThan(4)
+  await page.getByRole('checkbox', { name: '操作员' }).click()
+  await page.getByRole('button', { name: '移动到已选项' }).click()
+  await expect(page.getByRole('listbox', { name: '已选项' })).toContainText('操作员')
+
+  await page.goto('/design-system/data')
+  const separator = page.getByRole('separator', { name: '调整面板大小' })
+  await separator.press('ArrowRight')
+  await expect(separator).toHaveAttribute('aria-valuenow', '55')
+  const firstHandle = page.getByRole('button', { name: /拖动第 1 项/ })
+  await firstHandle.press('ArrowDown')
+  await expect(page.getByLabel('字段顺序').locator('li').first()).toContainText('负责人')
 })

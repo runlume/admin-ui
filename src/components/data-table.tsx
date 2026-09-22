@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import {
   ArrowDown,
   ArrowUp,
@@ -99,7 +99,7 @@ export function ColumnManager<T>({
   /** 传入表格的 storageId 后，「恢复默认」会连列宽一起复位。 */
   storageId?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [dragging, setDragging] = useState<string>()
   const [dragOver, setDragOver] = useState<string>()
   const allIds = columns
@@ -281,7 +281,7 @@ export function DataTable<T>({
    */
   virtual?: { height?: number; rowHeight?: number; overscan?: number }
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const root = useRef<HTMLDivElement>(null)
   const drag = useRef<{ id: string; x: number; width: number } | null>(null)
   const [available, setAvailable] = useState(0)

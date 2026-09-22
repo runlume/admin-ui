@@ -1,6 +1,6 @@
 import { PaginationBar } from './pagination-bar'
 import { PageButton } from './page-button'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Button } from '@/components/ui/button'
 
 export function CursorPagination({
@@ -22,7 +22,7 @@ export function CursorPagination({
   previous: () => void
   next: () => void
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <PaginationBar mode="cursor" summary={t('pagination.cursorSummary', { page, count })}>
       {page > 1 && (

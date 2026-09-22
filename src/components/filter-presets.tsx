@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { describePresetValue } from '@/lib/presets'
 import { StorageBox } from './storage-box'
 
@@ -17,7 +17,7 @@ export function FilterPresets<T>({
   /** 列表里的摘要文案；不传时用通用格式化（键: 值 · 键: 值） */
   summary?: (value: T) => string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   return (
     <StorageBox
       title={t('presets')}

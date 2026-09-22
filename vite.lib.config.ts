@@ -2,6 +2,17 @@ import { fileURLToPath, URL } from 'node:url'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
+const packageJson = require('./package.json') as {
+  dependencies?: Record<string, string>
+  peerDependencies?: Record<string, string>
+}
+const externalPackages = new Set([
+  ...Object.keys(packageJson.dependencies ?? {}),
+  ...Object.keys(packageJson.peerDependencies ?? {}),
+])
 
 export default defineConfig({
   publicDir: false,
@@ -15,17 +26,19 @@ export default defineConfig({
     outDir: 'dist-package',
     lib: {
       entry: fileURLToPath(new URL('./src/admin-ui.ts', import.meta.url)),
-      formats: ['es'],
-      fileName: 'index',
+      formats: ['es', 'cjs'],
+      fileName: (format, entryName) => `${entryName}.${format === 'es' ? 'js' : 'cjs'}`,
       cssFileName: 'styles',
     },
     rollupOptions: {
       external: (id) =>
-        id === 'i18next' ||
-        id === 'react' ||
-        id === 'react-dom' ||
-        id === 'react-i18next' ||
-        id.startsWith('react/'),
+        [...externalPackages].some(
+          (dependency) => id === dependency || id.startsWith(`${dependency}/`),
+        ),
+      output: {
+        preserveModules: true,
+        preserveModulesRoot: 'src',
+      },
     },
   },
 })

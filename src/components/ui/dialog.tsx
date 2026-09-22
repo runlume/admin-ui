@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { avoidInitialCloseFocus } from '@/lib/dialog-focus'
 import { cn } from '@/lib/utils'
 import { XIcon } from 'lucide-react'
@@ -62,7 +62,7 @@ function DialogContent({
   /** 距顶部的距离（px）；不传则垂直居中。 */
   top?: number
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [offset, setOffset] = React.useState({ x: 0, y: 0 })
   // 拖动期间禁用过渡：否则 translate 会以 200ms 过渡，跟手会有明显滞后。
   const [dragging, setDragging] = React.useState(false)

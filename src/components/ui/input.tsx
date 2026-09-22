@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Eye, EyeOff, X } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../../lib/use-ui-translation'
 import { TimeInput } from './time-input'
 import { DateInput } from './date-input'
 import { cn } from '@/lib/utils'
@@ -27,7 +27,7 @@ function Input({
   clearable?: boolean
   onClear?: () => void
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [revealed, setRevealed] = React.useState(false)
   const password = type === 'password'
   const controlType = password && revealed ? 'text' : type

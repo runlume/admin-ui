@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Check, Plus, SquarePen, Trash2, X } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { NativeSelect } from '@/components/ui/native-select'
@@ -50,7 +50,7 @@ function Field({
   value: string
   onChange: (value: string) => void
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const label = t('editableTable.cellLabel', { column: column.label, index: index + 1 })
   switch (column.type) {
     case 'select':
@@ -107,7 +107,7 @@ function Field({
 
 /** 只读态：下拉显示选项文案，开关显示启用/停用，其余直接显示原值。 */
 function CellValue({ column, value }: { column: EditableTableColumn; value: string }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   if (column.type === 'switch') {
     return (
       <span className={cn('text-sm', value !== 'true' && 'text-muted-foreground')}>
@@ -141,7 +141,7 @@ export function EditableTable({
   stickyActions?: boolean
   className?: string
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [rows, setRows] = useState<Row[]>(() =>
     defaultRows.map((row) => ({
       ...row,

@@ -1,0 +1,368 @@
+/* Runlume 标准后台设计：主题入口。
+ *
+ * 提取自 platform/frontend/src/index.css。这里是全部语义 Token 的唯一来源，
+ * 业务页面只引用 Token 生成的 Tailwind 工具类（bg-card、text-muted-foreground、
+ * border-border 等），不写死颜色。主题预设见 palettes.css，基础色/主题色自由
+ * 组合见 custom-palettes.css，无障碍覆盖见 accessibility.css。
+ */
+@import 'tailwindcss' source(none);
+@source './components/**/*.{ts,tsx}';
+@source './lib/**/*.{ts,tsx}';
+@import 'tw-animate-css';
+@import './palettes.css';
+@import './custom-palettes.css';
+@import './accessibility.css';
+@custom-variant dark (&:is(.dark *));
+
+/* Token → Tailwind 颜色/圆角映射。新增 Token 必须同时在这里登记。 */
+@theme inline {
+  --font-weight-normal: var(--a11y-weight-normal, 400);
+  --font-weight-medium: var(--a11y-weight-medium, 500);
+  --font-weight-semibold: var(--a11y-weight-semibold, 600);
+  --font-weight-bold: var(--a11y-weight-bold, 700);
+  --font-sans: 'Geist Variable', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground, var(--foreground));
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground, var(--foreground));
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground, var(--foreground));
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-table-header: var(--table-header);
+  --color-table-stripe: var(--table-stripe);
+  --color-table-hover: var(--table-hover);
+  --color-table-border: var(--table-border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--foreground);
+  --color-sidebar-accent: var(--accent);
+  --color-sidebar-accent-foreground: var(--accent-foreground);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-ring: var(--ring);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: var(--primary-foreground);
+  --color-brand-lime: var(--brand-lime);
+  --color-brand-lime-foreground: var(--brand-lime-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-suspended: var(--suspended);
+  --color-suspended-soft: var(--suspended-soft);
+  --color-disabled: var(--disabled);
+  --color-disabled-soft: var(--disabled-soft);
+  --color-inactive: var(--inactive);
+  --color-inactive-soft: var(--inactive-soft);
+  --color-unknown: var(--unknown);
+  --color-unknown-soft: var(--unknown-soft);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* 默认方案：青绿。品牌主色与面层同族，面层色度按统一阶梯递增。 */
+:root {
+  color-scheme: light;
+  --background: #f8fbf9;
+  --foreground: #11312f;
+  --card: #ffffff;
+  --popover: #ffffff;
+  --primary: #086c6a;
+  --primary-hover: #065654;
+  --primary-foreground: #ffffff;
+  --secondary: #ecf4f1;
+  --muted: #ecf4f1;
+  --muted-foreground: #4f6d68;
+  --accent: #e1efed;
+  --accent-foreground: #086c6a;
+  --border: #d6e5e0;
+  --input: #97b5b0;
+  --ring: #086c6a;
+  --sidebar: #eff6f3;
+  /* 默认青绿保留品牌青柠；其余方案与自定义主题色按各自色相覆盖，见 palettes.css。 */
+  --brand-lime: #dcef9b;
+  --brand-lime-foreground: #244030;
+  --success: #047857;
+  --success-soft: #ecfdf5;
+  --success-foreground: #ffffff;
+  --warning: #92400e;
+  --warning-soft: #fffbeb;
+  --warning-foreground: #ffffff;
+  --info: #0369a1;
+  --info-soft: #f0f9ff;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  /* 已暂停走暖橙（与待处理的琥珀区分），其余三个中性态各用一族颜色：
+     已停用石墨灰、未启用石板蓝、未知雾紫。 */
+  --suspended: #c2410c;
+  --suspended-soft: #ffedd5;
+  --disabled: #4b5563;
+  --disabled-soft: #ebedef;
+  --inactive: #43537a;
+  --inactive-soft: #e8eefa;
+  --unknown: #6a5aa0;
+  --unknown-soft: #f3f0fb;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --radius: 0.5rem;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #0d2420;
+  --foreground: #e4f0eb;
+  --card: #133931;
+  --popover: #133931;
+  --primary: #8cd6c5;
+  --primary-hover: #b7e6d9;
+  --primary-foreground: #102321;
+  --secondary: #10322b;
+  --muted: #10322b;
+  --muted-foreground: #aac4bb;
+  --accent: #1e453c;
+  --accent-foreground: #b7e6d9;
+  --border: #2c584d;
+  --input: #629184;
+  --ring: #8cd6c5;
+  --sidebar: #0f2c26;
+  --success: #6ee7b7;
+  --success-soft: #123a2d;
+  --success-foreground: #123a2d;
+  --warning: #fcd34d;
+  --warning-soft: #3c2d13;
+  --warning-foreground: #3c2d13;
+  --info: #7dd3fc;
+  --info-soft: #173747;
+  --danger: #fca5a5;
+  --danger-soft: #3f1d20;
+  --suspended: #fdba74;
+  --suspended-soft: #45230e;
+  --disabled: #b6c0c4;
+  --disabled-soft: #232b2e;
+  --inactive: #a3b7dd;
+  --inactive-soft: #1e2839;
+  --unknown: #c3b4f0;
+  --unknown-soft: #2b2440;
+  --destructive: #fca5a5;
+  --destructive-foreground: #3f1014;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  body {
+    margin: 0;
+    min-width: 320px;
+    font-size: 0.875rem;
+    font-weight: var(--a11y-weight-normal, 400);
+  }
+  label {
+    @apply font-medium;
+  }
+  label input,
+  label select,
+  label textarea {
+    @apply font-normal;
+  }
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  [data-slot='button'][data-variant='default']:hover {
+    background: var(--primary-hover);
+  }
+}
+
+@layer utilities {
+  .content-grid {
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 原生复选框/单选框统一到主题色，保留 checked/indeterminate/disabled 与键盘语义。 */
+@layer base {
+  input[type='checkbox'],
+  input[type='radio'] {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    vertical-align: middle;
+    border: 1px solid var(--input);
+    background-color: var(--card);
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    accent-color: var(--primary);
+  }
+  input[type='checkbox'] {
+    border-radius: 4px;
+    position: relative;
+  }
+  input[type='radio'] {
+    border-radius: 50%;
+  }
+  input[type='checkbox']:checked,
+  input[type='checkbox']:indeterminate,
+  input[type='radio']:checked {
+    border-color: var(--primary);
+    background-color: var(--primary);
+  }
+  input[type='checkbox']:checked:not(:indeterminate)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--primary-foreground);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3.5 8 3 3 6-6' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  input[type='checkbox']:indeterminate {
+    background-image: linear-gradient(var(--primary-foreground), var(--primary-foreground));
+    background-size: 8px 2px;
+  }
+  input[type='radio']:checked {
+    background-image: radial-gradient(circle, var(--primary-foreground) 0 3px, transparent 3.5px);
+  }
+  input[type='checkbox']:disabled,
+  input[type='radio']:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  @media (forced-colors: active) {
+    input[type='checkbox'],
+    input[type='radio'] {
+      appearance: auto;
+    }
+    input[type='checkbox']::before {
+      display: none;
+    }
+  }
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [data-slot='select-trigger']:focus-visible {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 2px color-mix(in oklch, var(--ring) 18%, transparent);
+  }
+  input[type='file']::file-selector-button {
+    margin-right: 0.75rem;
+    border: 0;
+    border-radius: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--accent);
+    color: var(--accent-foreground);
+    font: inherit;
+    cursor: pointer;
+  }
+  progress {
+    appearance: none;
+    height: 0.5rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: 999px;
+    background: var(--muted);
+    color: var(--primary);
+    accent-color: var(--primary);
+  }
+  progress::-webkit-progress-bar {
+    background: var(--muted);
+  }
+  progress::-webkit-progress-value {
+    background: var(--primary);
+    border-radius: 999px;
+  }
+  progress::-moz-progress-bar {
+    background: var(--primary);
+    border-radius: 999px;
+  }
+  input[type='number'] {
+    appearance: textfield;
+  }
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+  .themed-date-input::-webkit-calendar-picker-indicator,
+  .themed-time-input::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+  summary {
+    position: relative;
+    list-style: none;
+    padding-left: 1.25rem;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::before {
+    content: '';
+    position: absolute;
+    left: 0.125rem;
+    top: 0.4em;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-right: 1.5px solid var(--muted-foreground);
+    border-bottom: 1.5px solid var(--muted-foreground);
+    transform: rotate(-45deg);
+  }
+  details[open] > summary::before {
+    transform: rotate(45deg);
+  }
+}

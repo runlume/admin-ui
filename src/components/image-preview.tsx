@@ -1,6 +1,6 @@
 import { useRef, useState, type ReactNode } from 'react'
 import { Maximize2, Minus, Plus, RotateCcw } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from './ui/dialog'
 import { cn } from '@/lib/utils'
@@ -19,7 +19,7 @@ export function ImagePreview({
   /** 缩略图内容，默认直接渲染图片。 */
   children?: ReactNode
 }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const [open, setOpen] = useState(false)
   const list = images?.length ? images : [{ src, alt }]
   const [index, setIndex] = useState(0)
@@ -37,11 +37,20 @@ export function ImagePreview({
       >
         {children ?? <img src={src} alt={alt} className="max-h-32 rounded-lg border" />}
       </button>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-3xl">
+      <Dialog
+        open={open}
+        onOpenChange={(next) => {
+          setOpen(next)
+          if (!next) {
+            setZoom(1)
+            setPan({ x: 0, y: 0 })
+          }
+        }}
+      >
+        <DialogContent className="h-[min(88dvh,56rem)] grid-rows-[1fr] overflow-hidden p-0 sm:max-w-[min(92vw,80rem)] [&_[data-slot=dialog-close]]:top-5 [&_[data-slot=dialog-close]]:right-5 [&_[data-slot=dialog-close]]:rounded-md [&_[data-slot=dialog-close]]:p-2">
           <DialogTitle className="sr-only">{current.alt}</DialogTitle>
           <DialogDescription className="sr-only">{t('imagePreview.hint')}</DialogDescription>
-          <div className="flex items-center justify-end gap-1">
+          <div className="absolute top-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1 rounded-xl border bg-background/90 p-1.5 shadow-sm backdrop-blur">
             <Button
               type="button"
               variant="outline"
@@ -81,7 +90,7 @@ export function ImagePreview({
               <RotateCcw aria-hidden="true" />
             </Button>
           </div>
-          <div className="flex max-h-[70dvh] items-center justify-center overflow-auto">
+          <div className="flex min-h-0 items-center justify-center overflow-hidden px-6 pt-20 pb-6">
             <img
               src={current.src}
               alt={current.alt}
@@ -102,14 +111,18 @@ export function ImagePreview({
               onPointerUp={() => {
                 drag.current = null
               }}
+              onDoubleClick={() => {
+                setZoom((value) => (value === 1 ? 2 : 1))
+                setPan({ x: 0, y: 0 })
+              }}
               className={cn(
-                'max-w-full rounded-lg object-contain transition-transform',
+                'h-full w-full select-none rounded-lg object-contain transition-transform',
                 zoom > 1 && 'cursor-grab active:cursor-grabbing',
               )}
             />
           </div>
           {list.length > 1 && (
-            <div className="flex items-center justify-between gap-3">
+            <div className="absolute inset-x-6 bottom-4 flex items-center justify-between gap-3 rounded-xl border bg-background/90 p-2 shadow-sm backdrop-blur">
               <Button
                 type="button"
                 variant="outline"

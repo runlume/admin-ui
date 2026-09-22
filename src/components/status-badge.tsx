@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useUiTranslation } from '../lib/use-ui-translation'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 const tones = {
@@ -12,7 +12,7 @@ const tones = {
   UNKNOWN: 'bg-unknown-soft text-unknown',
 } as const
 export function StatusBadge({ status }: { status: string }) {
-  const { t } = useTranslation()
+  const { t } = useUiTranslation()
   const known = Object.hasOwn(tones, status)
   return (
     <Badge
