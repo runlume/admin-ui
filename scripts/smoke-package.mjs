@@ -55,4 +55,8 @@ execFileSync('node', ['-e', "require.resolve('@runlume/admin-ui/styles.css')"], 
   cwd: consumer,
   stdio: 'inherit',
 })
+execFileSync('node', ['-e', "require.resolve('@runlume/admin-ui/theme.css')"], {
+  cwd: consumer,
+  stdio: 'inherit',
+})
 console.log('package smoke passed')
