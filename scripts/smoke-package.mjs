@@ -22,8 +22,13 @@ execFileSync(
     '--no-audit',
     '--no-fund',
     tarball,
-    'react@18.2.0',
-    'react-dom@18.2.0',
+    // 宿主实际要提供的一套（组件库的 peerDependencies）：根入口会带上外壳，
+    // 因此 react-router 与 react-i18next 也必须能被解析，不能只装 react。
+    'react@19.2.8',
+    'react-dom@19.2.8',
+    'react-router@7.18.3',
+    'i18next@26.4.2',
+    'react-i18next@17.0.13',
   ],
   { cwd: consumer, stdio: 'inherit' },
 )

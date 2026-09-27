@@ -58,6 +58,10 @@ resources: { 'zh-CN': { translation: { ...shellZh, ...appZh } } }
 需要数据的组件一律由宿主传值：`ConsoleLayout` 的 `brand` / `repositoryUrl`、`NotificationsButton` 的
 `unread`、`AboutPanel` 的一组品牌参数、`UserSettings` 的 `aboutContent` 与 `shortcutDefaults`。
 
+对等依赖（宿主提供，不随包安装）：`react` / `react-dom`（18.2+）、`react-router`（6.4–7）、
+`i18next` 与 `react-i18next` —— 外壳组件用它们做路由与文案。只要 UI 原语、不要外壳时，
+从 `@runlume/admin-ui/ui/*` 按子路径引入即可，不触发根入口。
+
 ## 目录
 
 | 路径                                 | 内容                                                                             |
