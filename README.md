@@ -4,8 +4,9 @@ Runlume 标准后台组件库：语义 Token、UI 原语、数据组件，以及
 面包屑、页签、菜单搜索、收藏夹、用户菜单与设置弹窗、外观与无障碍偏好）。业务应用只需要接自己的
 路由、会话与数据，界面基线直接从这里取。
 
-同目录的两个仓库：`admin-react`（标准后台应用：路由、菜单、会话接线与标准页面的参考实现）与
-`admin-design`（上一层目录，文档站与官网）。
+配套仓库：[admin-react](https://github.com/runlume/admin-react)（标准后台应用：路由、菜单、会话接线
+与标准页面的参考实现）在 `../admin-react`，[admin-design](https://github.com/runlume/admin-design)
+（文档站与官网）在上一层目录。
 
 ## 安装
 
