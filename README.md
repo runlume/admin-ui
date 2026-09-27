@@ -38,15 +38,15 @@ import { shellEn, shellZh } from '@runlume/admin-ui/lib/shell-messages'
 
 导出面：
 
-| 子路径 | 内容 |
-| --- | --- |
-| `@runlume/admin-ui` | 全量导出（组件 + lib + hooks） |
-| `@runlume/admin-ui/ui/*` | 原语组件（button、dialog、table、sidebar…） |
-| `@runlume/admin-ui/components/*` | 数据组件与外壳组件（data-table、console-layout、user-settings…） |
-| `@runlume/admin-ui/lib/*` | 通用工具与状态（appearance、navigation、permissions、shell-messages…） |
-| `@runlume/admin-ui/hooks/*` | 通用 hook |
-| `@runlume/admin-ui/theme.css` | Token + 组件样式（Tailwind 宿主） |
-| `@runlume/admin-ui/styles.css` | 预构建完整样式 |
+| 子路径                           | 内容                                                                   |
+| -------------------------------- | ---------------------------------------------------------------------- |
+| `@runlume/admin-ui`              | 全量导出（组件 + lib + hooks）                                         |
+| `@runlume/admin-ui/ui/*`         | 原语组件（button、dialog、table、sidebar…）                            |
+| `@runlume/admin-ui/components/*` | 数据组件与外壳组件（data-table、console-layout、user-settings…）       |
+| `@runlume/admin-ui/lib/*`        | 通用工具与状态（appearance、navigation、permissions、shell-messages…） |
+| `@runlume/admin-ui/hooks/*`      | 通用 hook                                                              |
+| `@runlume/admin-ui/theme.css`    | Token + 组件样式（Tailwind 宿主）                                      |
+| `@runlume/admin-ui/styles.css`   | 预构建完整样式                                                         |
 
 外壳文案随包提供，合并进宿主的 i18n 即可，宿主同名 key 优先：
 
@@ -59,14 +59,14 @@ resources: { 'zh-CN': { translation: { ...shellZh, ...appZh } } }
 
 ## 目录
 
-| 路径 | 内容 |
-| --- | --- |
-| `src/components/ui/` | 原语组件（基于 radix-ui 与语义 Token） |
-| `src/components/` | 数据组件与外壳组件 |
-| `src/lib/` | 状态与工具：appearance、notification-preferences、navigation、权限、快捷键、文案 |
-| `src/hooks/` | 通用 hook |
-| `src/theme.css` `src/components.css` | 样式层（分层约定见 AGENTS.md） |
-| `src/admin-ui.ts` | 入口，按目录全量导出 |
+| 路径                                 | 内容                                                                             |
+| ------------------------------------ | -------------------------------------------------------------------------------- |
+| `src/components/ui/`                 | 原语组件（基于 radix-ui 与语义 Token）                                           |
+| `src/components/`                    | 数据组件与外壳组件                                                               |
+| `src/lib/`                           | 状态与工具：appearance、notification-preferences、navigation、权限、快捷键、文案 |
+| `src/hooks/`                         | 通用 hook                                                                        |
+| `src/theme.css` `src/components.css` | 样式层（分层约定见 AGENTS.md）                                                   |
+| `src/admin-ui.ts`                    | 入口，按目录全量导出                                                             |
 
 ## 开发
 

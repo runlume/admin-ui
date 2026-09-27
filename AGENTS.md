@@ -17,11 +17,11 @@
 
 ## 2. 样式分层
 
-| 文件 | 内容 | 谁用 |
-| --- | --- | --- |
-| `src/theme.css` | Token → Tailwind 映射、语义取值、配色、无障碍覆盖 | 用 Tailwind 的宿主 `@import` |
-| `src/components.css` | 组件自身的结构、动效与状态样式 | 由 `theme.css` 带入 |
-| `src/admin-ui.css` | 预构建完整入口（Tailwind + 动画 + 上面两份） | 不用 Tailwind 的宿主 |
+| 文件                 | 内容                                              | 谁用                         |
+| -------------------- | ------------------------------------------------- | ---------------------------- |
+| `src/theme.css`      | Token → Tailwind 映射、语义取值、配色、无障碍覆盖 | 用 Tailwind 的宿主 `@import` |
+| `src/components.css` | 组件自身的结构、动效与状态样式                    | 由 `theme.css` 带入          |
+| `src/admin-ui.css`   | 预构建完整入口（Tailwind + 动画 + 上面两份）      | 不用 Tailwind 的宿主         |
 
 新增组件样式写进 `components.css` 并注明对应组件；Token 变更必须同步 `theme.css` 的映射与六套配色。
 
