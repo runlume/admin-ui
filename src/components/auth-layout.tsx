@@ -1,15 +1,8 @@
 import type { ReactNode } from 'react'
 import { Layers3, Palette, ShieldCheck, type LucideIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Brand } from './brand'
 import { GithubLink } from './github-link'
 import { PreferencesMenu } from './preferences-menu'
-
-/** 品牌站点：业务系统换成自己的官网。 */
-const brandUrl = import.meta.env.VITE_APP_PLATFORM_WEB_BASEURL || 'https://runlume.app'
-
-/** 模板自身的开源仓库，业务系统换成自己的。 */
-const repositoryUrl = 'https://github.com/runlume/admin-design'
 
 const points: { icon: LucideIcon; key: string }[] = [
   { icon: Palette, key: 'theme' },
@@ -21,12 +14,30 @@ const points: { icon: LucideIcon; key: string }[] = [
  * 未登录页外壳：左侧品牌区、右侧表单区、底部版权。
  * 登录、注册、找回密码共用，业务系统接入真实身份服务时替换表单即可。
  */
-export function AuthLayout({ children }: { children: ReactNode }) {
+export function AuthLayout({
+  children,
+  brand,
+  brandUrl = 'https://runlume.app',
+  brandLabel = 'runlume.app',
+  repositoryUrl,
+  footerLabel,
+}: {
+  children: ReactNode
+  /** 品牌标识（通常是产品自己的 <Brand />）。 */
+  brand?: ReactNode
+  /** 品牌站点，页面右上角的外链目标。 */
+  brandUrl?: string
+  brandLabel?: string
+  /** 本系统仓库地址；不传时不显示仓库入口。 */
+  repositoryUrl?: string
+  /** 左侧品牌区底部的产品标识文案。 */
+  footerLabel?: string
+}) {
   const { t } = useTranslation()
   return (
     <main className="grid min-h-dvh lg:grid-cols-[1.05fr_1fr]">
       <section className="relative hidden flex-col justify-between overflow-hidden border-r bg-sidebar p-12 lg:flex xl:p-16">
-        <Brand className="w-36" />
+        {brand}
         <div className="max-w-lg">
           <span className="mb-7 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs text-primary">
             <span aria-hidden="true" className="size-1.5 rounded-full bg-primary" />
@@ -47,23 +58,25 @@ export function AuthLayout({ children }: { children: ReactNode }) {
             ))}
           </div>
         </div>
-        <p className="font-mono text-xs text-muted-foreground">RUNLUME ADMIN DESIGN</p>
+        {footerLabel && <p className="font-mono text-xs text-muted-foreground">{footerLabel}</p>}
       </section>
       <section className="flex flex-col">
         <header className="flex h-24 shrink-0 items-center gap-4 px-6 sm:px-10">
-          <Brand className="w-32 lg:hidden" />
+          <span className="lg:hidden">{brand}</span>
           <a
             href={brandUrl}
             className="hidden text-xs text-muted-foreground hover:text-primary lg:inline"
             rel="noreferrer"
             target="_blank"
           >
-            runlume.app
+            {brandLabel}
           </a>
           {/* 右侧操作区：语言 / 亮暗常驻，仓库入口排在最后 */}
           <div className="ml-auto flex items-center gap-5">
             <PreferencesMenu />
-            <GithubLink className="ml-1" href={repositoryUrl} label={t('githubRepo')} />
+            {repositoryUrl && (
+              <GithubLink className="ml-1" href={repositoryUrl} label={t('githubRepo')} />
+            )}
           </div>
         </header>
         <div className="flex flex-1 items-center justify-center px-6 pb-16">

@@ -1,0 +1,24 @@
+node_modules
+dist
+dist-package
+dist-ssr
+*.local
+test-results
+playwright-report
+# Playwright 全局登录后的会话文件
+src/test/e2e/.auth
+.DS_Store
+
+# 文档站（VitePress）产物与缓存
+docs/.vitepress/cache
+docs/.vitepress/dist
+
+# 宣传页的拼装产物（site/ + public/brand）
+_site
+
+# 共享环境默认值保留；机器专用 *.local 忽略。
+!.env.development
+!.env.production
+!.env.test
+.env.*.local
+.claude/settings.local.json

@@ -4,7 +4,13 @@ import { copyFile, mkdir } from 'node:fs/promises'
 
 const source = new URL('../src/', import.meta.url)
 const target = new URL('../dist-package/', import.meta.url)
-const files = ['theme.css', 'palettes.css', 'custom-palettes.css', 'accessibility.css']
+const files = [
+  'theme.css',
+  'palettes.css',
+  'custom-palettes.css',
+  'accessibility.css',
+  'components.css',
+]
 
 await mkdir(target, { recursive: true })
 for (const file of files) {

@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { EditableTable } from '@/components/editable-table'
-import '@/lib/i18n'
 
 const columns = [
   { key: 'name', label: '客户名称' },

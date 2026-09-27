@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { PermissionProvider } from '@/app/permission-provider'
+import { PermissionProvider } from '@/components/permission'
 import { Can, RequirePermission } from '@/components/permission'
-import '@/lib/i18n'
 
 describe('权限组件', () => {
   it('Can：有权限渲染 children，没权限渲染 fallback', () => {

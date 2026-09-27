@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { StatusBadge } from '@/components/status-badge'
-import '@/lib/i18n'
 
 describe('StatusBadge', () => {
   it('已知状态使用对应文案', () => {

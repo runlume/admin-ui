@@ -12,18 +12,15 @@ import { cn } from '@/lib/utils'
 import { ColorSettings } from './color-settings'
 import { AccessibilitySettings } from './accessibility-settings'
 import { NotificationSettings } from './notification-settings'
-import { AboutPanel } from './about-panel'
 import { Slider } from './ui/slider'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { transitionOptions } from '@/lib/appearance'
 import { layoutModes } from '@/lib/appearance'
-import {
-  defaultShortcuts,
-  shortcutConflict,
-  writeShortcuts,
-  type ShortcutSetting,
-} from '@/lib/preset-shortcuts'
+import { shortcutConflict, writeShortcuts, type ShortcutSetting } from '@/lib/preset-shortcuts'
+
+/** 快捷键的默认组合：由宿主登记自己的路由。 */
+export type ShortcutDefault = { combo: string; path: string; label: string }
 
 export type UserProfileFacts = {
   displayName?: string
@@ -44,7 +41,9 @@ export function UserSettings({
   groups,
   profile,
   systemContent,
+  aboutContent,
   shortcuts,
+  shortcutDefaults = [],
   onShortcutsChange,
 }: {
   view: 'settings' | 'profile' | null
@@ -52,8 +51,12 @@ export function UserSettings({
   groups: NavigationGroup[]
   profile?: UserProfileFacts
   systemContent?: ReactNode
+  /** 「关于」页签内容；由宿主传入品牌与仓库信息，组件库不绑定具体产品。 */
+  aboutContent?: ReactNode
   /** 自定义快捷键（与默认组合合并），保存后立即生效。 */
   shortcuts?: ShortcutSetting[]
+  /** 宿主登记的默认组合；设置弹窗展示它们并允许覆盖。 */
+  shortcutDefaults?: readonly ShortcutDefault[]
   onShortcutsChange?: (next: ShortcutSetting[]) => void
 }) {
   const { t } = useTranslation()
@@ -152,7 +155,7 @@ export function UserSettings({
               value="about"
               className="min-h-0 min-w-0 overflow-y-auto overscroll-contain pr-2 text-sm"
             >
-              <AboutPanel />
+              {aboutContent}
             </TabsContent>
             <TabsContent
               value="interface"
@@ -311,7 +314,7 @@ export function UserSettings({
                     <legend className="font-medium">{t('shortcuts.title')}</legend>
                     <p className="text-xs text-muted-foreground">{t('shortcuts.hint')}</p>
                     <div className="space-y-2">
-                      {defaultShortcuts.map((item) => {
+                      {shortcutDefaults.map((item) => {
                         const custom = shortcuts?.find((entry) => entry.path === item.path)
                         const value = custom?.combo ?? item.combo
                         const conflict = shortcutConflict(value, item.path, shortcuts ?? [])

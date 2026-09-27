@@ -7,14 +7,16 @@
  *
  * 这里只放设计系统自己的源码样式：Token → Tailwind 映射、语义 Token 取值、六套配色与
  * 旧版基础色/主题色组合、无障碍覆盖，以及消费这些 Token 的元素级基础样式（复选框、
- * 进度条、日期/时间输入、summary、焦点环、选区色）。不含 Tailwind preflight、已编译的
- * 工具类与组件布局，也不含任何构建产物。
+ * 进度条、日期/时间输入、summary、焦点环、选区色）与组件级样式（components.css）。
+ * 不含 Tailwind preflight、已编译的工具类，也不含任何构建产物。
  *
  * 需要开箱即用、自带预构建工具类的完整样式时用 styles.css。
  */
 @import './palettes.css';
 @import './custom-palettes.css';
 @import './accessibility.css';
+/* 组件自身的结构、动效与状态样式随之带上，宿主不必再单独引一份。 */
+@import './components.css';
 @custom-variant dark (&:is(.dark *));
 
 /* Token → Tailwind 颜色/圆角映射。新增 Token 必须同时在这里登记。 */

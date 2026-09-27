@@ -2,13 +2,11 @@ import { useMemo } from 'react'
 import { storageKey } from '@/lib/storage-key'
 import { useHotkeys, type Hotkey } from '@/lib/hotkeys'
 
-/** 默认快捷键：`g d` 工作台、`g c` 客户、`g n` 通知、`g s` 设置。 */
-export const defaultShortcuts = [
-  { combo: 'g d', path: '/', label: 'sample.navOverview' },
-  { combo: 'g c', path: '/customers', label: 'sample.navCustomers' },
-  { combo: 'g n', path: '/notifications', label: 'notifications.nav' },
-  { combo: 'g s', path: '/settings', label: 'sample.navSettings' },
-] as const
+/**
+ * 默认快捷键由宿主提供：组件库不假定任何路由，业务系统把自己的
+ * `g d` 工作台、`g s` 设置等组合传进 `UserSettings` 的 `shortcuts`。
+ */
+export const defaultShortcuts: readonly { combo: string; path: string; label: string }[] = []
 
 export type ShortcutSetting = { path: string; combo: string }
 
@@ -45,10 +43,11 @@ export function shortcutConflict(combo: string, path: string, custom: ShortcutSe
 export function useDefaultShortcuts(
   navigate: (path: string) => void,
   custom: ShortcutSetting[] = [],
+  defaults: readonly { combo: string; path: string }[] = defaultShortcuts,
 ) {
   const hotkeys = useMemo<Hotkey[]>(() => {
     const merged = [
-      ...defaultShortcuts.map((item) => ({
+      ...defaults.map((item) => ({
         path: item.path as string,
         combo: item.combo as string,
       })),
@@ -58,6 +57,6 @@ export function useDefaultShortcuts(
       combo: item.combo,
       handler: () => navigate(item.path),
     }))
-  }, [custom, navigate])
+  }, [custom, defaults, navigate])
   useHotkeys(hotkeys)
 }

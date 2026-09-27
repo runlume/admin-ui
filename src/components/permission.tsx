@@ -1,7 +1,18 @@
 import type { ReactNode } from 'react'
 import { ForbiddenPage } from '@/components/page'
-import { usePermission } from '@/lib/permission-context'
+import { PermissionContext, usePermission } from '@/lib/permission-context'
 import type { PermissionRequirement } from '@/lib/permissions'
+
+/** 把当前会话的权限码挂到上下文，供菜单、路由守卫与按钮级鉴权读取。 */
+export function PermissionProvider({
+  permissions,
+  children,
+}: {
+  permissions?: readonly string[]
+  children: ReactNode
+}) {
+  return <PermissionContext value={permissions ?? []}>{children}</PermissionContext>
+}
 
 /**
  * 按钮 / 区块级鉴权：没有权限时不渲染 `children`，可以用 `fallback` 换成禁用态。

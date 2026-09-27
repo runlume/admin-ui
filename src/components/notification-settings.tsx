@@ -1,5 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { useNotifications, type NotificationPreferences } from '@/lib/notifications'
+import {
+  useNotificationPreferences,
+  type NotificationPreferences,
+} from '@/lib/notification-preferences'
 import { NativeSelect } from './ui/native-select'
 
 const toggles: { key: 'inApp' | 'email' | 'desktop'; hint: string }[] = [
@@ -8,13 +11,11 @@ const toggles: { key: 'inApp' | 'email' | 'desktop'; hint: string }[] = [
   { key: 'desktop', hint: 'desktopHint' },
 ]
 
-/**
- * 通知偏好设置。与通知中心共用同一个 store，改动即时生效并保存在当前浏览器。
- */
+/** 通知偏好设置：偏好保存在当前浏览器，改动即时生效。 */
 export function NotificationSettings() {
   const { t } = useTranslation()
-  const preferences = useNotifications((state) => state.preferences)
-  const setPreference = useNotifications((state) => state.setPreference)
+  const preferences = useNotificationPreferences((state) => state.preferences)
+  const setPreference = useNotificationPreferences((state) => state.setPreference)
   return (
     <div className="space-y-5">
       <p className="text-sm text-muted-foreground">{t('notifications.settingsHint')}</p>

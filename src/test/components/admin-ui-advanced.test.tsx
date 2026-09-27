@@ -5,7 +5,6 @@ import { Rate } from '@/components/rate'
 import { ResizablePanel } from '@/components/resizable-panel'
 import { SortableList } from '@/components/sortable-list'
 import { Transfer } from '@/components/transfer'
-import '@/lib/i18n'
 
 describe('新增高级组件', () => {
   it('穿梭框把选中项移到目标列表', () => {

@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import type { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from '@/components/data-table'
-import '@/lib/i18n'
 
 type Row = { id: string; name: string }
 

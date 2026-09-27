@@ -1,23 +1,28 @@
 import { Bell } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
-import { unreadCount, useNotifications } from '@/lib/notifications'
 import { Button } from './ui/button'
 
 /**
- * 顶栏通知入口：跳转通知中心并显示未读角标。
- * 未读数与通知页共用 `useNotifications`，任一处已读都会同步角标。
+ * 顶栏通知入口：未读数与目标路由由宿主传入（服务端数据是业务系统的职责），
+ * 组件只负责角标与无障碍名称。
  */
-export function NotificationsButton() {
+export function NotificationsButton({
+  unread,
+  to = '/notifications',
+}: {
+  /** 未读条数；0 时不显示角标。 */
+  unread: number
+  to?: string
+}) {
   const { t } = useTranslation()
-  const unread = useNotifications((state) => unreadCount(state.items))
   const label =
     unread > 0
       ? `${t('notifications.nav')}：${t('notifications.unreadSummary', { count: unread })}`
       : t('notifications.nav')
   return (
     <Button asChild variant="ghost" size="icon" className="relative">
-      <Link to="/notifications" aria-label={label} title={t('notifications.nav')}>
+      <Link to={to} aria-label={label} title={t('notifications.nav')}>
         <Bell className="size-4" aria-hidden="true" />
         {unread > 0 && (
           <span

@@ -30,12 +30,10 @@ import {
   PinOff,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Brand } from '@/components/brand'
 import { MenuSearch } from '@/components/menu-search'
 import { FullscreenButton } from '@/components/fullscreen-button'
 import { GithubLink } from '@/components/github-link'
 import { PreferencesMenu } from '@/components/preferences-menu'
-import { brandInfo } from '@/lib/brand-info'
 import {
   Sidebar,
   SidebarContent,
@@ -80,6 +78,8 @@ export type ConsoleLayoutProps = {
   title?: string
   brand?: ReactNode
   brandHref?: string
+  /** 仓库地址：传入后顶栏出现仓库入口；不传时该快捷操作留空。 */
+  repositoryUrl?: string
   /** 侧栏底部的外链，例如官网、仓库或帮助文档；默认用外链图标，可逐项指定图标。 */
   footerLinks?: { href: string; label: string; icon?: LucideIcon }[]
   /** 传入后启用收藏夹，并作为收藏数据的隔离键（通常用当前用户 ID）。 */
@@ -136,6 +136,7 @@ function ConsoleContent({
   title = 'Runlume',
   brand,
   brandHref = '/',
+  repositoryUrl,
   footerLinks,
   favoritesKey,
   accountControl,
@@ -178,7 +179,9 @@ function ConsoleContent({
     language: <PreferencesMenu action="language" />,
     theme: <PreferencesMenu action="theme" />,
     // 仓库入口默认排最后；顺序与显隐在「设置 → 外观 → 顶栏快捷操作」里调
-    github: <GithubLink href={brandInfo.repository} label={t('headerActions.github')} />,
+    github: repositoryUrl ? (
+      <GithubLink href={repositoryUrl} label={t('headerActions.github')} />
+    ) : null,
     ...headerActions,
   }
   const currentLabel =
@@ -320,7 +323,7 @@ function ConsoleContent({
                 className={cn('flex h-[76px] items-center px-6', compact && 'justify-center px-2')}
               >
                 <NavLink to={brandHref} aria-label={title} onClick={() => setOpenMobile(false)}>
-                  {brand ?? <Brand compact={compact} />}
+                  {brand ?? <span className="truncate text-sm font-semibold">{title}</span>}
                 </NavLink>
               </div>
               {accountControl && (
@@ -438,7 +441,7 @@ function ConsoleContent({
                   {/* 纯顶部没有侧栏，品牌补在顶栏最左侧；顶部+侧边时品牌仍在侧栏。 */}
                   {layout === 'top' && (
                     <Link to={brandHref} className="mr-2 inline-flex shrink-0">
-                      {brand ?? <Brand />}
+                      {brand ?? <span className="truncate text-sm font-semibold">{title}</span>}
                     </Link>
                   )}
                   {/* 纯顶部：一级项展开该分组的菜单；顶部+侧边：点击切换左侧菜单。 */}
