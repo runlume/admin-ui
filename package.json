@@ -1,6 +1,6 @@
 {
   "name": "@runlume/admin-ui",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "description": "Runlume 标准后台组件库：UI 原语、数据组件、控制台外壳、主题与语义 Token",
   "license": "Apache-2.0",

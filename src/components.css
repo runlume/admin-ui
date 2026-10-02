@@ -319,6 +319,20 @@
   user-select: none;
 }
 
+/*
+ * 浮层内容必须可选中：确认弹窗、配置面板等场景需要复制标识、服务器路径与命令。
+ * 宿主页面（嵌入 iframe、外层容器、父级框架样式）可能给祖先节点设置
+ * `user-select: none`，该属性会被继承进浮层，表现为"弹窗里的字选不中、复制不了"。
+ * 这里在浮层内容上显式取回，宿主怎么设都不影响浮层内部；拖动中的弹窗仍然不产生
+ * 选中高亮。菜单项、Tooltip 等内部已各自声明不可选中，不受此规则影响。
+ */
+[data-slot='dialog-content']:not([data-dragging]),
+[data-slot='sheet-content'],
+[data-slot='hover-card-content'] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 [data-draggable][data-dragging] [data-slot='dialog-drag-handle'] {
   cursor: grabbing;
 }
