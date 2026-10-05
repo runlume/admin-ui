@@ -88,3 +88,5 @@ pnpm test:package   # 校验发布产物可被引用
 ## 协议
 
 Apache-2.0，见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)。
+
+`MultiSelect` 支持搜索、多选标签及可选的自定义值创建：传入 `onCreate(value)` 创建选项并更新受控 `options` / `values`，用 `canCreate(value)` 校验候选值。搜索框内可点击添加或按 Enter；`disabled` 会关闭弹层并禁止编辑。不传 `onCreate` 时保留原多选行为。

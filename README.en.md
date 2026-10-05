@@ -51,3 +51,5 @@ pnpm docs:build  # design system documentation site
 ## License
 
 Apache-2.0, see [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+`MultiSelect` supports search, selected tags and optional custom values. Use `onCreate(value)` to update controlled `options` and `values`, and `canCreate(value)` to validate candidates. Add a value with the button or Enter in the search field. `disabled` closes the popover and prevents editing. Without `onCreate`, existing selection behavior is preserved.

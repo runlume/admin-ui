@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
 import { useUiTranslation } from '../lib/use-ui-translation'
 import { Popover } from 'radix-ui'
@@ -20,6 +20,9 @@ export function MultiSelect({
   label,
   placeholder,
   className,
+  disabled = false,
+  onCreate,
+  canCreate,
 }: {
   options: MultiSelectOption[]
   values: string[]
@@ -27,24 +30,52 @@ export function MultiSelect({
   label: string
   placeholder?: string
   className?: string
+  disabled?: boolean
+  /** 宿主创建选项并更新受控 options / values。 */
+  onCreate?: (value: string) => void
+  canCreate?: (value: string) => boolean
 }) {
   const { t } = useUiTranslation()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
+  useEffect(() => {
+    if (disabled) {
+      setOpen(false)
+      setQuery('')
+    }
+  }, [disabled])
   const visible = useMemo(() => {
     const keyword = query.trim().toLowerCase()
     return keyword
       ? options.filter((option) => option.label.toLowerCase().includes(keyword))
       : options
   }, [options, query])
+  const candidate = query.trim()
+  const creatable =
+    Boolean(onCreate) &&
+    candidate.length > 0 &&
+    !options.some(
+      (option) =>
+        option.value.toLowerCase() === candidate.toLowerCase() ||
+        option.label.toLowerCase() === candidate.toLowerCase(),
+    ) &&
+    !values.some((value) => value.toLowerCase() === candidate.toLowerCase()) &&
+    (canCreate?.(candidate) ?? true)
+  function create() {
+    if (disabled || !creatable) return
+    onCreate?.(candidate)
+    setQuery('')
+  }
   const selected = options.filter((option) => values.includes(option.value))
   function toggle(value: string, checked: boolean) {
+    if (disabled) return
     onValuesChange(checked ? [...values, value] : values.filter((item) => item !== value))
   }
   return (
     <Popover.Root
-      open={open}
+      open={open && !disabled}
       onOpenChange={(next) => {
+        if (disabled) return
         setOpen(next)
         if (!next) setQuery('')
       }}
@@ -53,8 +84,9 @@ export function MultiSelect({
         <Button
           type="button"
           variant="outline"
+          disabled={disabled}
           role="combobox"
-          aria-expanded={open}
+          aria-expanded={open && !disabled}
           aria-label={label}
           className={cn(
             'h-auto min-h-10 w-full justify-between bg-card py-1.5 font-normal',
@@ -89,8 +121,19 @@ export function MultiSelect({
               placeholder={t('search')}
               className="h-8"
               onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' && !event.nativeEvent.isComposing && creatable) {
+                  event.preventDefault()
+                  create()
+                }
+              }}
             />
           </div>
+          {creatable && (
+            <Button type="button" variant="ghost" className="w-full justify-start" onClick={create}>
+              {t('createOption', { value: candidate })}
+            </Button>
+          )}
           <div className="flex items-center justify-between px-2 py-1 text-xs text-muted-foreground">
             <label className="flex items-center gap-2">
               <Checkbox
